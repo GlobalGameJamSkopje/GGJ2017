@@ -6,38 +6,16 @@ public class SegmentScript : MonoBehaviour
 
     private Vector3 _direction;
 
-    public float timeAlive = 0;
+    private Rigidbody2D rb2D;
 
-
-    // commented line 
-    public GameObject SpawnerSegment;
-    // end
-
-    void Update()
+    private void Start()
     {
-        timeAlive += Time.deltaTime;
-        transform.Translate(_direction * Time.deltaTime * speedOfTravel);
+        rb2D = GetComponent<Rigidbody2D>();
+        rb2D.AddForce(_direction * speedOfTravel, ForceMode2D.Impulse);
     }
 
     public void SetDirection(float x, float y)
     {
         _direction = new Vector3(x, y);
     }
-    public void ChangeDirection(Vector2 newDirection)
-    {
-        _direction = new Vector3(_direction.x * newDirection.x, _direction.y * newDirection.y);
-    }
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Destroyer")
-    //    {
-    //        if (_timeAlive > 0.2f)
-    //        {
-    //            GameObject spawnerSegment = Instantiate(SpawnerSegment);
-    //            spawnerSegment.transform.position = gameObject.transform.position;
-    //        }
-    //        Destroy(gameObject);
-    //    }
-    //}
 }

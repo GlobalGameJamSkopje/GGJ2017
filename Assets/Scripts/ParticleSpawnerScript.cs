@@ -36,6 +36,10 @@ public class ParticleSpawnerScript : MonoBehaviour
     void Update()
     {
         UpdateConnectingLines();
+        if(transform.GetChildCount() <=0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private SegmentScript CreateParticle(float x, float y)

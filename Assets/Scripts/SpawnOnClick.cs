@@ -16,7 +16,6 @@ public class SpawnOnClick : MonoBehaviour
                 GameObject spawner = Instantiate(spawnerSample);
                 spawner.transform.position = position;
             }
-
         }
     }
 }
