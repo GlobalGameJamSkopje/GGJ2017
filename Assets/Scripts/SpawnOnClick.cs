@@ -7,8 +7,8 @@ public class SpawnOnClick : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && FindObjectsOfType<ParticleSpawnerScript>().Length == 0)
+        {          
             Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero);
             if (hit.collider != null && hit.collider.tag == "SpawnArea")

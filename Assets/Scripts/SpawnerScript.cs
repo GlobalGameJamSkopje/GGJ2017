@@ -15,7 +15,7 @@ public class SpawnerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Particle" && _timeFromLastSpawn > 2f)
+        if (collision.tag == "Particle" && _timeFromLastSpawn > 0.2f)
         {
             _timeFromLastSpawn = 0;
             GameObject spawner = Instantiate(spawnerSample);

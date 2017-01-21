@@ -34,7 +34,7 @@ public class ParticleSpawnerScript : MonoBehaviour
     void Update()
     {
         UpdateConnectingLines();
-        if (transform.childCount <= 0)
+        if (transform.childCount <= 1)
         {
             Destroy(gameObject);
         }
