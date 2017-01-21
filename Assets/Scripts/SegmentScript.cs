@@ -6,8 +6,8 @@ public class SegmentScript : MonoBehaviour
 
     private Vector3 _direction;
 
-    private float _timeAlive = 0;
-    
+    public float timeAlive = 0;
+
 
     // commented line 
     public GameObject SpawnerSegment;
@@ -15,7 +15,7 @@ public class SegmentScript : MonoBehaviour
 
     void Update()
     {
-        _timeAlive += Time.deltaTime;
+        timeAlive += Time.deltaTime;
         transform.Translate(_direction * Time.deltaTime * speedOfTravel);
     }
 
@@ -23,17 +23,21 @@ public class SegmentScript : MonoBehaviour
     {
         _direction = new Vector3(x, y);
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void ChangeDirection(Vector2 newDirection)
     {
-        if (collision.gameObject.tag == "Destroyer")
-        {
-            if (_timeAlive > 0.2f)
-            {
-                GameObject spawnerSegment = Instantiate(SpawnerSegment);
-                spawnerSegment.transform.position = gameObject.transform.position;
-            }
-            Destroy(gameObject);
-        }
+        _direction = new Vector3(_direction.x * newDirection.x, _direction.y * newDirection.y);
     }
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Destroyer")
+    //    {
+    //        if (_timeAlive > 0.2f)
+    //        {
+    //            GameObject spawnerSegment = Instantiate(SpawnerSegment);
+    //            spawnerSegment.transform.position = gameObject.transform.position;
+    //        }
+    //        Destroy(gameObject);
+    //    }
+    //}
 }
