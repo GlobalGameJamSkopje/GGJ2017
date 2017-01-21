@@ -26,14 +26,13 @@ public class SegmentScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(_timeAlive > 0.2f)
-        {
-            GameObject spawnerSegment = Instantiate(SpawnerSegment);
-            spawnerSegment.transform.position = gameObject.transform.position;
-        }     
-
         if (collision.gameObject.tag == "Destroyer")
         {
+            if (_timeAlive > 0.2f)
+            {
+                GameObject spawnerSegment = Instantiate(SpawnerSegment);
+                spawnerSegment.transform.position = gameObject.transform.position;
+            }
             Destroy(gameObject);
         }
     }
