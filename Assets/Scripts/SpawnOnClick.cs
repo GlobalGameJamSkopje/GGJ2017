@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnOnClick : MonoBehaviour
 {
     public GameObject spawnerSample;
     public GameObject loseCanvas;
 
-    private int _loseCounter = 2;
+    public Text text;
+
+    private int _loseCounter = 3;
     private Rigidbody2D _loptaRigidBody2D;
 
     private void Start()
     {
+        text.text = _loseCounter.ToString();
         _loptaRigidBody2D = GameObject.FindObjectOfType<LoptaScript>().GetComponent<Rigidbody2D>();
     }
     void Update()
@@ -23,6 +27,7 @@ public class SpawnOnClick : MonoBehaviour
                 GameObject spawner = Instantiate(spawnerSample);
                 spawner.transform.position = position;
                 _loseCounter--;
+                text.text = _loseCounter.ToString();
             }
         }
 
