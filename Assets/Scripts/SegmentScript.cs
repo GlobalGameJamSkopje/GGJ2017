@@ -18,4 +18,9 @@ public class SegmentScript : MonoBehaviour
     {
         _direction = new Vector3(x, y);
     }
+
+    void OnDestroy()
+    {
+        Destroy(gameObject.GetComponent<LineRenderer>());
+    }
 }

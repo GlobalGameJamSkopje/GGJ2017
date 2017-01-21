@@ -4,16 +4,13 @@ public class ParticleSpawnerScript : MonoBehaviour
 {
     public int segments;
     public float radius;
-
-    
-
-
     public SegmentScript sample;
 
-    private SegmentScript[] particles;
+    private SegmentScript[] _particles;
+
     void Start()
     {
-        particles = new SegmentScript[segments];
+        _particles = new SegmentScript[segments];
 
         float angle = 20f;
         for (int i = 0; i < segments; i++)
@@ -21,22 +18,23 @@ public class ParticleSpawnerScript : MonoBehaviour
             var x = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
             var y = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
 
-            particles[i] = CreateParticle(x, y);
+            _particles[i] = CreateParticle(x, y);
+            _particles[i].name = i.ToString();
 
-            if (i > 0 && i < segments)
-                Connect(particles[i], particles[i - 1]);
+            if (i > 0)
+                Connect(_particles[i], _particles[i - 1]);
             if (i == segments - 1)
-                Connect(particles[0], particles[i]);
+                Connect(_particles[0], _particles[i]);
 
             angle += (360f / segments);
-            particles[i].GetComponent<SegmentScript>().SetDirection(x, y);
+            _particles[i].GetComponent<SegmentScript>().SetDirection(x, y);
         }
     }
 
     void Update()
     {
         UpdateConnectingLines();
-        if(transform.GetChildCount() <=0)
+        if (transform.childCount <= 0)
         {
             Destroy(gameObject);
         }
@@ -65,21 +63,16 @@ public class ParticleSpawnerScript : MonoBehaviour
     {
         for (int i = 0; i < segments; i++)
         {
-            if (i > 0 && i < segments)
-            {
-                Connect(particles[i], particles[i - 1]);
-
-                if (particles[i] == null
-                    && i < segments - 1)
-                    DisableLineRenderer(particles[i + 1]);
-            }
+            if (i > 0)
+                Connect(_particles[i], _particles[i - 1]);
             if (i == segments - 1)
-            {
-                Connect(particles[0], particles[i]);
+                Connect(_particles[0], _particles[i]);
 
-                if (particles[i] == null)
-                    DisableLineRenderer(particles[0]);
-            }
+            if (_particles[i] != null) continue;
+            if (i < segments - 1)
+                DisableLineRenderer(_particles[i + 1]);
+            if (i == segments - 1)
+                DisableLineRenderer(_particles[0]);
         }
     }
     void DisableLineRenderer(SegmentScript particle)
@@ -87,6 +80,6 @@ public class ParticleSpawnerScript : MonoBehaviour
         if (particle == null)
             return;
 
-        particle.GetComponent<LineRenderer>().enabled = false;
+        Destroy(particle.GetComponent<LineRenderer>());
     }
 }
