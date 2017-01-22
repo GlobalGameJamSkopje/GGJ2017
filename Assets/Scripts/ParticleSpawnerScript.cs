@@ -70,14 +70,17 @@ public class ParticleSpawnerScript : MonoBehaviour
             if (i > 0)
             {
                 Connect(_particles[i], _particles[i - 1]);
-                if (_particles[i] != null && _particles[i - 1] != null && Vector3.Distance(_particles[i].transform.position, _particles[i - 1].transform.position) > distance)
+                if (_particles[i] != null 
+                    && _particles[i - 1] != null 
+                    && Vector3.Distance(_particles[i].transform.position, _particles[i - 1].transform.position) > distance)
                     DisableLineRenderer(_particles[i]);
-
             }
             if (i == segments - 1)
             {
                 Connect(_particles[0], _particles[i]);
-                if (_particles[0] != null && _particles[i] != null && Vector3.Distance(_particles[0].transform.position, _particles[i].transform.position) > distance)
+                if (_particles[0] != null 
+                    && _particles[i] != null 
+                    && Vector3.Distance(_particles[0].transform.position, _particles[i].transform.position) > distance)
                     DisableLineRenderer(_particles[0]);
             }
             if (_particles[i] != null) continue;
