@@ -5,6 +5,7 @@ public class ParticleSpawnerScript : MonoBehaviour
     public int segments;
     public float radius;
     public SegmentScript sample;
+    public const float distance = 0.4f;
 
     private SegmentScript[] _particles;
 
@@ -53,6 +54,9 @@ public class ParticleSpawnerScript : MonoBehaviour
             return;
 
         LineRenderer line = particle1.GetComponent<LineRenderer>();
+        if (line == null)
+            return;
+
         line.sortingOrder = 2;
         line.numPositions = 2;
         line.SetPosition(0, particle1.transform.position);
@@ -64,10 +68,18 @@ public class ParticleSpawnerScript : MonoBehaviour
         for (int i = 0; i < segments; i++)
         {
             if (i > 0)
+            {
                 Connect(_particles[i], _particles[i - 1]);
-            if (i == segments - 1)
-                Connect(_particles[0], _particles[i]);
+                if (_particles[i] != null && _particles[i - 1] != null && Vector3.Distance(_particles[i].transform.position, _particles[i - 1].transform.position) > distance)
+                    DisableLineRenderer(_particles[i]);
 
+            }
+            if (i == segments - 1)
+            {
+                Connect(_particles[0], _particles[i]);
+                if (_particles[0] != null && _particles[i] != null && Vector3.Distance(_particles[0].transform.position, _particles[i].transform.position) > distance)
+                    DisableLineRenderer(_particles[0]);
+            }
             if (_particles[i] != null) continue;
             if (i < segments - 1)
                 DisableLineRenderer(_particles[i + 1]);
